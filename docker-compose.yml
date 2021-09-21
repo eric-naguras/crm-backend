@@ -5,14 +5,14 @@ services:
     container_name: 'crm-api-prod'
     image: crm/api-prod:latest
     ports:
-      - '3000:8080'
+      - '3000:3000'
     restart: unless-stopped
     volumes:
       - /home/ubuntu/projects/crm-prod/src:/usr/src/app/src
     environment:
       - VIRTUAL_HOST=crm-api-prod.naguras.com
       - LETSENCRYPT_HOST=crm-api-prod.naguras.com
-      - VIRTUAL_PORT=8080
+      - VIRTUAL_PORT=3000
       - LETSENCRYPT_EMAIL=eric@naguras.com
     depends_on:
       - nginx-proxy
@@ -50,10 +50,11 @@ services:
     environment:
       - DEFAULT_EMAIL=eric@naguras.com
       - NGINX_PROXY_CONTAINER=nginx-proxy
-    volumes-from: 
-      - nginx-proxy
     volumes:
       - ./acme:/etc/acme.sh
+      - ./data/nginx/certs:/etc/nginx/certs
+      - ./data/nginx/vhost.d:/etc/nginx/vhost.d
+      - ./data/nginx/html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - docker-network
