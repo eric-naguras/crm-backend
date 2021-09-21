@@ -19,8 +19,8 @@ rsync -avz -e 'ssh' src ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.co
 rsync -avz -e 'ssh' package.json ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com:/home/ubuntu/projects/crm-prod
 rsync -avz -e 'ssh' package-lock.json ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com:/home/ubuntu/projects/crm-prod
 rsync -avz -e 'ssh' pm2.json ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com:/home/ubuntu/projects/crm-prod
-rsync -avz -e 'ssh' Dockerfile ubuntu@ec2-3-221-170-241.compute-1.amazonaws.com:/home/ubuntu/projects/crm-prod
-rsync -avz -e 'ssh' docker-compose.yml ubuntu@ec2-3-221-170-241.compute-1.amazonaws.com:/home/ubuntu
+rsync -avz -e 'ssh' Dockerfile ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com:/home/ubuntu/projects/crm-prod
+rsync -avz -e 'ssh' docker-compose.yml ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com:/home/ubuntu
 
 # Build dockerfile
 ssh ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com "cd /home/ubuntu/projects/crm-prod && docker build --no-cache -t crm/api-prod:latest ."
