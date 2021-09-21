@@ -96,4 +96,12 @@ router.post('/bookings', async (req, res) => {
 
 // #endregion *************** Bookings ***************
 
+router.post('/users', async (req, res) => {
+  if (req.ability.can('create', 'users')) {
+    const result = await handler.saveOrUpdateUser(req.body.user)
+    return res.status(200).send(result)
+  }
+  return res.status(403).send('Not allowed to create user')
+})
+
 module.exports = router
