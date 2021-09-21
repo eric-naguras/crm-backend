@@ -34,7 +34,8 @@ app.use((req, res, next) => {
           req.username = tmp[2].trim()
           req.ability = ABILITIES[req.role]
           req.id = tmp[3].trim()
-          db.logRequest({ date: new Date(), url: req.url, host: req.hostname, ip: req.ip })
+          var ip = req.header('x-forwarded-for')
+          db.logRequest({ date: new Date(), url: req.url, ip })
           next()
         }
       } else {
