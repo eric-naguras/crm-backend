@@ -1,0 +1,23 @@
+{
+  "name": "crm-backend",
+  "version": "1.0.0",
+  "description": "Backend services for CRM frontend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "author": "eric@naguras.com",
+  "license": "ISC",
+  "dependencies": {
+    "@casl/ability": "^5.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongodb": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "prettier": "2.1.2"
+  }
+}

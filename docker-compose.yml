@@ -1,0 +1,64 @@
+version: '3.6'
+
+services:
+  api-prod:
+    container_name: 'crm-api-prod'
+    image: crm/api-prod:latest
+    ports:
+      - '3000:8080'
+    restart: unless-stopped
+    volumes:
+      - /home/ubuntu/projects/crm-prod/src:/usr/src/app/src
+    environment:
+      - VIRTUAL_HOST=crm-api-prod.naguras.com
+      - LETSENCRYPT_HOST=crm-api-prod.naguras.com
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_EMAIL=eric@naguras.com
+    depends_on:
+      - nginx-proxy
+      - nginx-proxy-comp
+    logging:
+      #limit logs to 200MB (4rotations of 10M each)
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '4'
+    networks:
+      - docker-network
+
+  # Setting below is for basic website to allow
+  # letsencrypt to request certificates for the first time
+  nginx-proxy:
+    container_name: 'nginx-proxy'
+    image: nginxproxy/nginx-proxy:alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./data/nginx/certs:/etc/nginx/certs
+      - ./data/nginx/vhost.d:/etc/nginx/vhost.d
+      - ./data/nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - docker-network
+
+  nginx-proxy-comp:
+    container_name: 'nginx-proxy-comp'
+    image: nginxproxy/acme-companion
+    restart: unless-stopped
+    environment:
+      - DEFAULT_EMAIL=eric@naguras.com
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - acme:/etc/acme.sh
+      - ./data/nginx/certs:/etc/nginx/certs
+      - ./data/nginx/vhost.d:/etc/nginx/vhost.d
+      - ./data/nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
