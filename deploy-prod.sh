@@ -28,7 +28,5 @@ ssh ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com "cd /home/ubuntu/p
 ssh ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com "cd /home/ubuntu && docker-compose up -d"
 # clean up loose containers, images
 ssh ubuntu@ec2-35-178-187-243.eu-west-2.compute.amazonaws.com "docker system prune -f"
-# Discard .env-dev.enc so git will be clean
-git checkout .env-prod.enc
 echo
 echo "Production server is ready."

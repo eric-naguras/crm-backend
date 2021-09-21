@@ -50,11 +50,10 @@ services:
     environment:
       - DEFAULT_EMAIL=eric@naguras.com
       - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes-from: 
+      - nginx-proxy
     volumes:
-      - acme:/etc/acme.sh
-      - ./data/nginx/certs:/etc/nginx/certs
-      - ./data/nginx/vhost.d:/etc/nginx/vhost.d
-      - ./data/nginx/html:/usr/share/nginx/html
+      - ./acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - docker-network
