@@ -1,7 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb')
 const auth = require('../helpers/auth')
 
-const url = 'mongodb+srv://admin:Cire1234@cluster0.o1qod.mongodb.net/test'
+const url = process.env.MONGO_URL
 let db = null
 
 exports.init = () => {
